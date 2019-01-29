@@ -112,6 +112,25 @@ public class Locator {
     public static double[] nextRandomLocation(final double currentLatitude, final double currentLongitude,
                                        final double transitionProbability,
                                        final double latitudeChange, final double longitudeChange) {
-        return new double[] {0.0, 0.0};
+        double trp = Math.random();
+        double a = currentLatitude;
+        double b = currentLongitude;
+        if (trp > transitionProbability) {
+            a += latitudeChange;
+            b += longitudeChange;
+        }
+        if (a > MAX_LATITUDE) {
+            a = MAX_LATITUDE;
+        }
+        if (a < MIN_LATITUDE) {
+            a = MIN_LATITUDE;
+        }
+        if (b > MAX_LONGITUDE) {
+            b = MAX_LONGITUDE;
+        }
+        if (b < MIN_LONGITUDE) {
+            b = MIN_LONGITUDE;
+        }
+        return new double[] {a, b};
     }
 }

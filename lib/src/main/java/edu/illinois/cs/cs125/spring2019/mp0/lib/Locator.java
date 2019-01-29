@@ -47,7 +47,17 @@ public class Locator {
      */
     public static int farthestNorth(final double[] latitudes, final double[] longitudes,
                                     final boolean[] validLocations) {
-        return 0;
+        int result = -1;
+        double farthest = -100.0;
+        for (int i = 0; i < latitudes.length; i++) {
+            if (validLocations[i]) {
+                if (latitudes[i] > farthest) {
+                    result = i;
+                    farthest = latitudes[i];
+                }
+            }
+        }
+        return result;
     }
 
     /**
@@ -64,11 +74,17 @@ public class Locator {
      * @return true if the array contains another valid location equal to the current one
      */
     public static boolean beenHere(final int currentIndex,
-                            final double[] latitudes, final double[] longitudes,
-                            final boolean[] validLocations) {
+                                   final double[] latitudes, final double[] longitudes,
+                                   final boolean[] validLocations) {
+        for (int i = 0; i < latitudes.length; i++) {
+            if (validLocations[i]) {
+                if (latitudes[currentIndex] == latitudes[i] && longitudes[currentIndex] == longitudes[i]) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
-
     /**
      * Generate a new random location based on the current position and a transition probability.
      * <p>

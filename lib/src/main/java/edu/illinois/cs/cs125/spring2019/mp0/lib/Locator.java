@@ -77,10 +77,15 @@ public class Locator {
     public static boolean beenHere(final int currentIndex,
                                    final double[] latitudes, final double[] longitudes,
                                    final boolean[] validLocations) {
+        if (currentIndex >= latitudes.length) {
+            return false;
+        }
         for (int i = 0; i < latitudes.length; i++) {
-            if (validLocations[i]) {
-                if (latitudes[currentIndex] == latitudes[i] && longitudes[currentIndex] == longitudes[i]) {
-                    return true;
+            if (currentIndex != i) {
+                if (validLocations[i]) {
+                    if (latitudes[currentIndex] == latitudes[i] && longitudes[currentIndex] == longitudes[i]) {
+                        return true;
+                    }
                 }
             }
         }
@@ -115,7 +120,7 @@ public class Locator {
         double trp = Math.random();
         double a = currentLatitude;
         double b = currentLongitude;
-        if (trp > transitionProbability) {
+        if (trp <= transitionProbability) {
             a += latitudeChange;
             b += longitudeChange;
         }
